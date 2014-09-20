@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block titulo %}Fontes{% endblock %}
+{% block conteudo %}
+
+<p>Cuidado, ao deletar um item todas as publicações ligadas a ele serão removidas permanentemente.</p>
+<table class="blockTable">
+<tr>
+<th>Titulo</th>
+</tr>
+<tr>
+   <td>{{ revisao.titulo }}</td>
+</tr>      
+
+</table>
+<br />
+
+<p align="center">Clique <a href="{% url review:addfonte revisao=revisao.id %}"><img src="{{ STATIC_URL }}images/save-icon.gif" width="18" height="18" alt="Adicionar." />aqui</a> para adicionar uma fonte</p>
+<br />
+
+
+<!-- Inicio -->
+<table class="blockTable">
+<tr>
+<th>Fonte</th><th>Sigla</th><th>Link</th><th>Editar</th><th>Excluir</th>
+</tr>
+{% for f in fontes %}
+<tr>
+   <td>{{ f.nome }}</td>
+   <td>{{ f.sigla }}</td>
+   <td><a href="{{ f.url }}"><img src="{{ STATIC_URL }}images/link.gif" alt="Link" />&nbsp;Link</a></td>
+   <td><a href="{% url review:editfonte fonte=f.id %}"><img src="{{ STATIC_URL }}images/edit-icon.gif" alt="Editar" />&nbsp; Editar </a> </td>
+   <td><a href="{% url review:deletar id=f.id classe=f.get_class %}"><img src="{{ STATIC_URL }}images/trash.ico" alt="Excluir" />&nbsp; Excluir </a> </td>
+</tr> 
+<tr><td colspan="5">{{ f.expressao|safe }}</td></tr>     
+{% empty %}
+<tr>
+   <td colspan="5">Nenhuma fonte localizada para esta revisão.</td>
+</tr>
+{% endfor %}
+</table>
+<br />
+
+<!-- Fim -->
+
+{% endblock %}

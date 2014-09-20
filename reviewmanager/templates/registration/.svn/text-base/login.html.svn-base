@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block conteudo %}
+
+<h1>Login de usuário</h1>
+{% if form.has_errors %}
+<p>Seu usuário e senha não confere.
+Tente novamente.</p>
+{% endif %}
+<form method="post" action=".">
+{% csrf_token %}
+<table>
+<tr><td><p><label for="id_username">matricula ou siape:</label></td>
+<td>{{ form.username }}</p></td></tr>
+<tr><td><p><label for="id_password">senha:</label></td>
+<td>{{ form.password }}</p></td></tr>
+<input type="hidden" name="next" value="/" />
+<tr><td><input type="submit" value="login" /></td></tr>
+<tr><td colspan="2"><p>Ou clique <a href="{% url subscription:cadastro %}"><b>aqui</b></a> para cadastrar-se.</td></tr>
+</table>
+</form>
+
+{% endblock %}

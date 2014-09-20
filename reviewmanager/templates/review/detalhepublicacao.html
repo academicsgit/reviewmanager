@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block titulo %}Detalhes da Publicação{% endblock %}
+{% block conteudo %}
+
+<p>Aviso: Ao deletar um item os respectivos dados serão removidos permanentemente.</p>
+<p><a href="{% url review:publicacoes revisao=publicacao.revisao.id %}"><img src="{{ STATIC_URL }}images/lupa.jpeg" width="18" height="18" alt="Publicações" />Retornar para Listagem Geral</a></p>
+<p><a href="{% url review:selecionadasreport revisao=publicacao.revisao.id %}"><img src="{{ STATIC_URL }}images/lupa.jpeg" width="18" height="18" alt="Publicações" />Retornar para Listagem de aprovadas</a></p>
+<table class="blockTable">
+<tr>
+<th>Publicação selecionada</th><th>Ano</th><th>Artigo(Pdf)</th><th>Editar</th><th>Excluir</th>
+</tr>
+<tr>
+   <td>{{ publicacao.titulo }}</td>
+   <td>{{ publicacao.ano }}</td>
+   <td>
+   {% if publicacao.arquivo %}
+   <a href="{{ publicacao.arquivo.url }}"><img src="{{ STATIC_URL }}images/pdf.gif" alt="Abrir" />&nbsp;Pdf</a> 
+   {% else %}
+   <p>ND</p>
+   {% endif %} 
+   </td>
+   <td><a href="{% url review:editpublicacao publicacao=publicacao.id %}"><img src="{{ STATIC_URL }}images/edit-icon.gif" alt="Editar" /></a></td>
+   <td><a href="{% url review:deletar id=publicacao.id classe=publicacao.get_class %}"><img src="{{ STATIC_URL }}images/trash.ico" alt="Excluir" /></a></td>
+</tr>
+<tr>
+<td colspan="5">{{publicacao.resumo|safe}}</td>
+</tr>      
+
+</table>
+<br />
+
+<!-- inicio -->
+<table class="blockTable">
+<tr>
+<th colspan="5">Informações sobre Etapas da pesquisa</th>
+</tr>
+<tr>
+   <td colspan="5"><p align="center">Clique <a href="{% url review:addinfoetapa publicacao=publicacao.id %}"><img src="{{ STATIC_URL }}images/save-icon.gif" width="18" height="18" alt="Adicionar." />aqui</a> para adicionar informações desta etapa na publicação.</p>
+</td>
+</tr>
+<tr>
+<th>Sigla</th><th>Etapa Concluída</th><th>Status na pesquisa?</th><th>Editar</th><th>Excluir</th>
+</tr>
+{% for i in publicacao.infoetapa_set.all %}
+<tr>
+   <td>{{ i.etapa.sigla }}</td>
+   <td>
+   {% if i.etapaconcluida %}
+   	     <p style="color:green";>{{i.etapaconcluida|yesno:"SIM,NÃO" }}</p>
+      {% else %}
+         <p style="color:red";>{{i.etapaconcluida|yesno:"SIM,NÃO" }}</p>
+   {% endif %} 
+   </td>
+   <td>
+   {% if i.excluidanestaetapa %}
+   	     <p style="color:red";>{{i.excluidanestaetapa|yesno:"EXCLUÍDA,ATIVA" }}
+      {% else %}
+          <p style="color:green";>{{i.excluidanestaetapa|yesno:"EXCLUÍDA,ATIVA" }}</p>
+   {% endif %} 
+   </td>
+   <td><a href="{% url review:editinfoetapa infoetapa=i.id %}"><img src="{{ STATIC_URL }}images/edit-icon.gif" alt="Editar" />&nbsp; Editar </a> </td>
+   <td><a href="{% url review:deletar id=i.id classe=i.get_class %}"><img src="{{ STATIC_URL }}images/trash.ico" alt="Excluir" />&nbsp; Excluir </a> </td>
+</tr>      
+{% empty %}
+<tr>
+   <td colspan="5">Nenhum dado sobre etapas de pesquisa para esta publicação.</td>
+</tr>
+{% endfor %}
+</table>
+
+<br />
+<!-- inicio -->
+<table class="blockTable">
+<tr>
+<th colspan="4">Informações sobre questões de pesquisa</th>
+</tr>
+<tr>
+   <td colspan="4"><p align="center">Clique <a href="{% url review:addinfoquestao publicacao=publicacao.id %}"><img src="{{ STATIC_URL }}images/save-icon.gif" width="18" height="18" alt="Adicionar." />aqui</a> para adicionar informações sobre questões para publicação.</p>
+</td>
+</tr>
+<tr>
+<th>Sigla</th><th>Classificação</th><th>Editar</th><th>Excluir</th>
+</tr>
+{% for q in publicacao.infoquestao_set.all %}
+<tr>
+   <td>{{ q.questao.sigla }}</td>
+   <td>{{ q.classificacao }}</td>
+   <td><a href="{% url review:editinfoquestao infoquestao=q.id %}"><img src="{{ STATIC_URL }}images/edit-icon.gif" alt="Editar" />&nbsp; Editar </a> </td>
+   <td><a href="{% url review:deletar id=q.id classe=q.get_class %}"><img src="{{ STATIC_URL }}images/trash.ico" alt="Excluir" />&nbsp; Excluir </a> </td>
+</tr>      
+{% empty %}
+<tr>
+   <td colspan="4">Nenhum dado sobre questões de pesquisa localizado para esta publicação.</td>
+</tr>
+{% endfor %}
+</table>
+
+<!-- fim  -->
+<br />
+
+
+<!-- Inicio -->
+<table class="blockTable">
+<tr>
+<th colspan="3">Referências</th>
+</tr>
+<tr>
+   <td colspan="3"><p align="center">Clique <a href="{% url review:addreferencia publicacao=publicacao.id %}"><img src="{{ STATIC_URL }}images/save-icon.gif" width="18" height="18" alt="Adicionar." />aqui</a> para adicionar uma referência.</p>
+</td>
+</tr>
+<tr>
+<th>Titulo</th><th>Editar</th><th>Excluir</th>
+</tr>
+{% for r in publicacao.referencia_set.all %}
+<tr>
+   <td>{{ r.referencia }}</td>
+   <td><a href="{% url review:editreferencia referencia=r.id %}"><img src="{{ STATIC_URL }}images/edit-icon.gif" alt="Editar" />&nbsp; Editar </a> </td>
+   <td><a href="{% url review:deletar id=r.id classe=r.get_class %}"><img src="{{ STATIC_URL }}images/trash.ico" alt="Excluir" />&nbsp; Excluir </a> </td>
+</tr>      
+{% empty %}
+<tr>
+   <td colspan="3">Nenhuma referência localizada para esta publicação.</td>
+</tr>
+{% endfor %}
+</table>
+<br />
+
+<!-- Fim -->
+
+{% endblock %}

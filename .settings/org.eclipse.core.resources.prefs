@@ -1,0 +1,10 @@
+eclipse.preferences.version=1
+encoding//review/admin.py=utf-8
+encoding//review/forms.py=utf-8
+encoding//review/highcharts.py=utf-8
+encoding//review/models.py=utf-8
+encoding//review/reports.py=utf-8
+encoding//review/urls.py=utf-8
+encoding//review/views.py=utf-8
+encoding//reviewmanager/settings.py=utf-8
+encoding//reviewmanager/urls.py=utf-8

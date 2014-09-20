@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta name="author" content="Manuel Gonçalves manuel.pi@hotmail.com" />
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<link rel="stylesheet" href="{{ STATIC_URL }}images/style.css" type="text/css" />
+	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/tiny_mce/tiny_mce.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/tiny_mce/textareas.js"></script>
+	<title>REVISION MANAGER</title>
+	{% block scripts %}
+	{% endblock %}
+</head>
+<body>
+	<div id="page" align="center">
+		<div id="header">
+			<div id="companyname" align="left">REVISION MANAGER</div>
+			<div align="right" class="links_menu" id="menu">
+			<a href="{% url home %}">Home</a> |
+			{% if user.is_authenticated %}
+              <a href="{% url review:index %}">Minhas Revis&otilde;es</a> | <a href="{% url password_change %}">Alterar senha</a> | <a href="{% url django.contrib.auth.views.logout %}">logout</a>
+            {% else %}
+                <a href="{% url django.contrib.auth.views.login %}">Autentique-se</a> ou <a href="{% url review:adduser %}">Cadastre-se</a>
+            {% endif %}
+            </div>
+		</div>
+		<br />
+		<div id="content">
+			<div id="contenttext">
+				<span class="title_blue">{% block titulo %} {% endblock %}</span><br />
+				<span class="subtitle_gray">{% block subtitulo %} {% endblock %}</span><br />
+				<br />
+				<p class="body_text" align="justify">
+				{% block conteudo %}
+				{% endblock %}
+				<br />
+				</p>
+			</div>
+			<br />
+			<br />
+			<div class="footer">
+				<br />
+				<a href="/">Home</a> | Desenvolvido por Manuel Gon&ccedil;alves em 2014</a>.
+			</div>
+		</div>
+	</div>
+</body>
+</html>

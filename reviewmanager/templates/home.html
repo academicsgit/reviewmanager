@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block titulo %}Seja bem vindo(a), {{user.username}} {% endblock %}
+{% block subtitulo %}Minhas Revisões {% endblock %}
+{% block conteudo %}
+{% for r in revisoes %}
+<li> <a href="{% url review:detalherevisao id=r.id %}"> {{ r.nomereduzido }} </a> </li>
+
+{% empty %}
+
+<p>Não existem Revisões cadastradas para este usuário</p>
+
+{% endfor %}
+<p>Clique <a href="{% url review:revisaoform %}">aqui</a> para adicionar uma nova revisão.</p>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block titulo %}Etapas{% endblock %}
+{% block conteudo %}
+
+<p>Cuidado, ao deletar um item todas as publicações ligadas a ele serão removidas permanentemente.</p>
+<table class="blockTable">
+<tr>
+<th>Revisão atual</th>
+</tr>
+<tr>
+   <td>{{ revisao.titulo }}</td>
+</tr>      
+
+</table>
+<br />
+
+<p align="center">Clique <a href="{% url review:addetapa revisao=revisao.id %}"><img src="{{ STATIC_URL }}images/save-icon.gif" width="18" height="18" alt="Adicionar." />aqui</a> para adicionar uma etapa.</p>
+<br />
+
+
+<!-- Inicio -->
+<table class="blockTable">
+<tr>
+<th>Sigla</th><th>Descrição</th><th>Editar</th><th>Excluir</th>
+</tr>
+{% for e in etapas %}
+<tr>
+   <td>{{ e.sigla }}</td>
+   <td>{{ e.descricao }}</td>
+   <td><a href="{% url review:editetapa etapa=e.id %}"><img src="{{ STATIC_URL }}images/edit-icon.gif" alt="Editar" />&nbsp; Editar </a> </td>
+   <td><a href="{% url review:deletar id=e.id classe=e.get_class %}"><img src="{{ STATIC_URL }}images/trash.ico" alt="Excluir" />&nbsp; Excluir </a> </td>
+</tr>      
+{% empty %}
+<tr>
+   <td colspan="4">Nenhuma etapa localizada para esta revisão.</td>
+</tr>
+{% endfor %}
+</table>
+<br />
+
+<!-- Fim -->
+
+{% endblock %}

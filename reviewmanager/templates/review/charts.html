@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block scripts %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/highcharts.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/modules/exporting.js"></script>
+{% endblock %}
+{% block titulo %}Gráficos e Quantitativos por revisão{% endblock %}
+{% block conteudo %}
+<table class="blockTable">
+<tr>
+<th>Título</th>
+</tr>
+<tr>
+   <td>{{ revisao.titulo }}</td>
+</tr>      
+</table>
+<br />
+<table class="blockTable">
+<tr>
+<th colspan="5">Quantitativos por Etapa</th>
+</tr>
+<tr>
+<td colspan="5">Localizadas <b>{{publicacoes|length }}</b> publicações nesta revisão.</td>
+</tr>
+{% for e in revisao.etapas.all %}
+<tr>
+<th colspan="5">{{ e.sigla }}</th>
+</tr>
+<tr>
+<th>Etapa</th><th>Fonte</th><th>Publicações</th><th>Excluídas</th><th>Aprovadas na Etapa</th>
+</tr>
+{% for q in quantitativos %}
+{% if e.sigla == q.etapa %}
+<tr>
+   <td>{{ q.etapa }}</td>
+   <td>{{ q.fonte }}</td>
+   <td>{{ q.total }}</td>
+   <td>{{ q.excluidas }}</td>
+   <td>{{ q.aprovadas }}</td>
+ </tr>      
+{% endif %}
+{% empty %}
+<tr>
+   <td colspan="5">Nenhuma publicação localizada para esta revisão.</td>
+</tr>
+
+{% endfor %}
+{% endfor %}
+</table>
+<br />
+
+<div id="grafico1" style="width:100%; height:350px;">
+</div>
+<br />
+<div id="grafico2" style="width:100%; height:350px;">
+</div>
+<br />
+<div id="grafico3" style="width:100%; height:350px;">
+</div>
+<br />
+<div id="grafico4" style="width:100%; height:350px;">
+</div>
+<br />
+<div id="grafico5" style="width:100%; height:350px;">
+</div>
+<br />
+
+<table class="blockTable">
+<tr>
+<th colspan="3">Agrupamento e classificação das Selecionadas</th>
+</tr>
+<tr>
+<td colspan="3">Localizadas <b>{{selecionadas|length }}</b> publicações para análise qualitativa.</td>
+</tr>
+{% for q in revisao.questao_set.all %}
+<tr>
+<th colspan="3">{{ q.sigla }}</th>
+</tr>
+<tr>
+<td colspan="3"><b>{{ q.texto }}</b></td>
+</tr>
+<tr>
+<th>Questão</th><th>Classificação</th><th>Publicações</th>
+</tr>
+{% for c in classificacoes %}
+{% if q.sigla == c.questao %}
+<tr>
+   <td>{{ c.questao }}</td>
+   <td>{{ c.classificacao }}</td>
+   <td>{{ c.publicacoes|join:";" }}</td>
+</tr>
+{% endif %}      
+{% empty %}
+<tr>
+   <td colspan="3">Classificações não disponíveis.</td>
+</tr>
+
+{% endfor %}
+{% endfor %}
+</table>
+<br />
+<script type="text/javascript">
+{% for graf in graficos %}
+	{{ graf|safe }}
+{% endfor %}
+</script>
+
+
+{% endblock %}

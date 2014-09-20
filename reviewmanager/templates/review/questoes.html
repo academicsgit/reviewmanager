@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block titulo %}Questões{% endblock %}
+{% block conteudo %}
+
+<p>Cuidado, ao deletar um item todas as publicações ligadas a ele serão removidas permanentemente.</p>
+<table class="blockTable">
+<tr>
+<th>Titulo</th>
+</tr>
+<tr>
+   <td>{{ revisao.titulo }}</td>
+</tr>      
+
+</table>
+<br />
+
+<p align="center">Clique <a href="{% url review:addquestao revisao=revisao.id %}"><img src="{{ STATIC_URL }}images/save-icon.gif" width="18" height="18" alt="Adicionar." />aqui</a> para adicionar uma questão.</p>
+<br />
+
+
+<!-- Inicio -->
+<table class="blockTable">
+<tr>
+<th>Sigla</th><th>Texto</th><th>Editar</th><th>Excluir</th>
+</tr>
+{% for q in questoes %}
+<tr>
+   <td>{{ q.sigla }}</td>
+   <td>{{ q.texto }}</td>
+   <td><a href="{% url review:editquestao questao=q.id %}"><img src="{{ STATIC_URL }}images/edit-icon.gif" alt="Editar" />&nbsp; Editar </a> </td>
+   <td><a href="{% url review:deletar id=q.id classe=q.get_class %}"><img src="{{ STATIC_URL }}images/trash.ico" alt="Excluir" />&nbsp; Excluir </a> </td>
+</tr>      
+{% empty %}
+<tr>
+   <td colspan="4">Nenhuma questão localizada para esta revisão.</td>
+</tr>
+{% endfor %}
+</table>
+<br />
+
+<!-- Fim -->
+
+{% endblock %}

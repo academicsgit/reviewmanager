@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block titulo %}Resultado da requisi&ccedil;&atilde;o{% endblock %}
+{% block conteudo %}
+<ul class="errorlist">
+{% for msg in mensagens %}
+ 
+ <h2><li>{{ msg }}</li></h2>
+ 
+{% endfor %}
+
+</ul>
+
+{% endblock %}

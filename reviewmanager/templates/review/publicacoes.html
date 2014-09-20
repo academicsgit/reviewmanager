@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block titulo %}Publicações{% endblock %}
+{% block conteudo %}
+
+<table class="blockTable">
+<tr>
+<th>Titulo</th><th>Alterar Etapa de trabalho</th><th>Inserir TAG nas selecionadas</th>
+</tr>
+<tr>
+   <td>{{ revisao.titulo }}</td>
+   <td><a href="{% url review:changeetaparevisao revisao=revisao.id %}"><img src="{{ STATIC_URL }}images/edit-icon.gif" width="18" height="18" alt="Filtrar." />Alterar Etapa</a></td>
+   <td><a href="{% url review:tagselecionadas revisao=revisao.id %}"><img src="{{ STATIC_URL }}images/edit-icon.gif" width="18" height="18" alt="Filtrar." />Identificar selecionadas</a></td>
+	
+</tr>
+      
+
+</table>
+
+<br />
+<p align="center">Clique <a href="{% url review:addpublicacao revisao=revisao.id %}"><img src="{{ STATIC_URL }}images/save-icon.gif" width="18" height="18" alt="Adicionar." />aqui</a> para adicionar manualmente ou <a href="{% url review:importaris revisao=revisao.id %}"><img src="{{ STATIC_URL }}images/add-icon.gif" width="18" height="18" alt="Importar" />aqui</a> para importar de um arquivo ISI-RIS.</p>
+<br />
+<p align="center">Clique <a href="{% url review:filtropublicacao revisao=revisao.id %}"><img src="{{ STATIC_URL }}images/lupa.jpeg" width="18" height="18" alt="Filtrar." />aqui</a> para aplicar novos filtros nesta listagem.</p>
+<br />
+<table>
+  <tr>
+    <td>
+    	{% if publicacoes.has_previous %}
+    		<a href="?page={{ publicacoes.previous_page_number }}">Previous</a>
+    	{% endif %}
+    </td>
+    <td>Pagina {{publicacoes.number }} de {{ publicacoes.paginator.num_pages }}</td>
+    <td>
+    	{% if publicacoes.has_next %}
+    		<a href="?page={{ publicacoes.next_page_number }}">Next</a>
+    	{% endif %}
+    </td>
+  </tr>
+</table>
+<!-- Inicio -->
+<table class="blockTable">
+<tr>
+<th>Titulo</th><th>Ano</th><th>Fonte</th><th>Etapa</th><th>Avaliado na etapa?</th><th>Situação Geral</th><th>Editar</th><th>Deletar</th>
+</tr>
+<tr>
+<td colspan="8">Localizadas <b>{{publicacoes|length }}</b> publicações após as filtragens (Filtro padrão = Etapa atual), <b>{{avaliadas}}</b> nesta listagem ja foram avaliadas.</td>
+</tr>
+{% for p in publicacoes %}
+<tr>
+   <td><a href="{% url review:detalhepublicacao id=p.id %}">  {{ p.titulo }} </a></td>
+   <td>{{ p.ano }}</td>
+   <td>{{ p.fonte.sigla }}</td>
+   <td>{{ p.etapa.sigla }}</td>
+   <td>
+   {% if p.is_avaliada %}
+   	     <p style="color:green";>{{p.is_avaliada|yesno:"SIM,NÃO" }}</p>
+      {% else %}
+         <p style="color:red";>{{p.is_avaliada|yesno:"SIM,NÃO" }}</p>
+   {% endif %} 
+   </td>
+   <td>
+   {% if p.is_excluida %}
+   	     <p style="color:red";>{{p.is_excluida|yesno:"EXCLUÍDA,ATIVA" }}
+      {% else %}
+          <p style="color:green";>{{p.is_excluida|yesno:"EXCLUÍDA,ATIVA" }}</p>
+   {% endif %} 
+   </td>
+   
+   <td><a href="{% url review:editpublicacao publicacao=p.id %}"><img src="{{ STATIC_URL }}images/edit-icon.gif" alt="Editar" /></a></td>
+   <td><a href="{% url review:deletar id=p.id classe=p.get_class %}"><img src="{{ STATIC_URL }}images/trash.ico" alt="Excluir" /></a></td>
+</tr>      
+{% empty %}
+<tr>
+   <td colspan="8">Nenhuma publicação localizada para esta revisão.</td>
+</tr>
+{% endfor %}
+</table>
+<br />
+<table>
+  <tr>
+    <td>
+    	{% if publicacoes.has_previous %}
+    		<a href="?page={{ publicacoes.previous_page_number }}">Previous</a>
+    	{% endif %}
+    </td>
+    <td>Pagina {{publicacoes.number }} de {{ publicacoes.paginator.num_pages }}</td>
+    <td>
+    	{% if publicacoes.has_next %}
+    		<a href="?page={{ publicacoes.next_page_number }}">Next</a>
+    	{% endif %}
+    </td>
+  </tr>
+</table>
+
+
+<!-- Fim -->
+
+{% endblock %}

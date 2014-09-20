@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block scripts %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/highcharts.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/modules/exporting.js"></script>
+{% endblock %}
+{% block titulo %}Gráficos e Quantitativos de critérios por Etapa{% endblock %}
+{% block conteudo %}
+<table class="blockTable">
+<tr>
+<th>Título</th>
+</tr>
+<tr>
+   <td>{{ revisao.titulo }}</td>
+</tr>      
+</table>
+<br />
+
+<div id="grafico" style="width:100%; height:350px;">
+</div>
+<br />
+<script type="text/javascript">
+{{ grafico|safe }}
+</script>
+{% endblock %}

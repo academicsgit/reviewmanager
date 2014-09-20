@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block titulo %}Criterios{% endblock %}
+{% block conteudo %}
+
+<p>Cuidado, ao deletar um item todas as publicações ligadas a ele serão removidas permanentemente.</p>
+<table class="blockTable">
+<tr>
+<th>Titulo</th>
+</tr>
+<tr>
+   <td>{{ revisao.titulo }}</td>
+</tr>      
+
+</table>
+<br />
+
+<p align="center">Clique <a href="{% url review:addcriterio revisao=revisao.id %}"><img src="{{ STATIC_URL }}images/save-icon.gif" width="18" height="18" alt="Adicionar." />aqui</a> para adicionar um criterio</p>
+<br />
+
+
+<!-- Inicio -->
+<table class="blockTable">
+<tr>
+<th>Sigla</th><th>Descrição</th><th>Editar</th><th>Excluir</th>
+</tr>
+{% for c in criterios %}
+<tr>
+   <td>{{ c.sigla }}</td>
+   <td>{{ c.descricao }}</td>
+   <td><a href="{% url review:editcriterio criterio=c.id %}"><img src="{{ STATIC_URL }}images/edit-icon.gif" alt="Editar" />&nbsp; Editar </a> </td>
+   <td><a href="{% url review:deletar id=c.id classe=c.get_class %}"><img src="{{ STATIC_URL }}images/trash.ico" alt="Excluir" />&nbsp; Excluir </a> </td>
+</tr>      
+{% empty %}
+<tr>
+   <td colspan="4">Nenhum critério localizado para esta revisão.</td>
+</tr>
+{% endfor %}
+</table>
+<br />
+
+<!-- Fim -->
+
+{% endblock %}

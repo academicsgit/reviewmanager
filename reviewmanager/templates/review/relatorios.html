@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block titulo %}Relatórios por revisão{% endblock %}
+{% block conteudo %}
+
+
+<table class="blockTable">
+<tr>
+<th>Titulo</th>
+</tr>
+<tr>
+   <td>{{ revisao.titulo }}</td>
+</tr>      
+
+</table>
+<br />
+
+<table class="blockTable">
+<tr>
+<th>Relatórios disponíveis para esta Revisão</th>
+</tr>
+<tr>
+   <td><a href="{% url review:revisaoreport revisao=revisao.id %}"> Protocolo de pesquisa </a> </td>
+</tr>
+<tr>
+   <td><a href="{% url review:quantitativoreport revisao=revisao.id %}"> Quantitativos </a> </td>
+</tr>
+<tr>
+   <td><a href="{% url review:selecionadasreport revisao=revisao.id %}"> Selecionadas após filtragens </a> </td>
+</tr>
+<tr>
+   <td><a href="{% url review:allreport revisao=revisao.id %}"> Listar todas as publicações </a> </td>
+</tr> 
+<tr>
+<td><a href="{% url review:filtropublicacao revisao=revisao.id %}">Página de busca/filtragem</a></td>
+</tr>     
+<tr>
+   <td><a href="{% url review:charts revisao=revisao.id %}"> Gráficos </a> </td>
+</tr>
+<tr>
+   <td><a href="{% url review:quantcriterioetapa revisao=revisao.id %}"> Critérios por Etapa </a> </td>
+</tr>
+<tr>
+   <td><a href="{% url review:filtroreferencia revisao=revisao.id %}"> Referências </a> </td>
+</tr>      
+</table>
+<br />
+
+
+{% endblock %}

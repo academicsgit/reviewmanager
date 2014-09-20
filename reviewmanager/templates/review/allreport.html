@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block titulo %}Listagem completa de Publicações{% endblock %}
+{% block conteudo %}
+
+<table class="blockTable">
+<tr>
+<th>Titulo</th>
+</tr>
+<tr>
+   <td>{{ revisao.titulo }}</td>
+</tr>
+</table>
+
+<br />
+
+<!-- Inicio -->
+<table class="blockTable">
+<tr>
+<th>ID</th><th>Titulo</th><th>Autores</th><th>Ano</th><th>Fonte</th><th>Evento</th><th>Etapas</th><th>Questões</th><th>Situação</th>
+</tr>
+<tr>
+<td colspan="9">Localizadas <b>{{publicacoes|length }}</b> publicações.</td>
+</tr>
+{% for p in publicacoes %}
+<tr>
+   <td>P{{ forloop.counter }}</td>
+   <td><a href="{% url review:detalhepublicacao id=p.id %}">  {{ p.titulo }} </a></td>
+   <td>{{ p.autores }}</td>
+   <td>{{ p.ano }}</td>
+   <td>{{ p.fonte.sigla }}</td>
+   <td>{{ p.evento }}</td>
+   <td>
+   <!--  Entra num loop no conjunto de objetos recursivamente e utiliza o controle de primeiros  loops para colocar um separador , ou ; -->
+   {% for i in p.infoetapa_set.all  %}
+    {{i.etapa.sigla }}
+    {% if not forloop.last %}
+     ;
+    {% endif %}
+    	{% if i.criterios.all.count %}
+    		:
+    		{% for c in i.criterios.all %}
+        	   {{ c.sigla  }}
+        	   {% if not forloop.last %}
+    			 ,
+    		   {% endif %}
+        	{%endfor %}
+        {% endif %}
+        
+   
+   {% empty %}
+   
+   {% endfor %}
+   </td>
+   <td>
+   {% for i in p.infoquestao_set.all  %}
+    {{i.questao.sigla }}:{{ i.classificacao }}
+    {% if not forloop.last %}
+     ;
+    {% endif %}
+    	
+    {% empty %}
+    
+    {% endfor %}
+   </td>
+   <td>
+   {% if p.is_excluida %}
+   	     <p style="color:red";>{{p.is_excluida|yesno:"EXCLUÍDA,SELECIONADA" }}
+      {% else %}
+          <p style="color:green";>{{p.is_excluida|yesno:"EXCLUÍDA,SELECIONADA" }}</p>
+   {% endif %} 
+   </td>
+   
+</tr>      
+{% empty %}
+<tr>
+   <td colspan="9">Nenhuma publicação localizada para esta revisão.</td>
+</tr>
+{% endfor %}
+</table>
+<br />
+<!-- Fim -->
+
+{% endblock %}

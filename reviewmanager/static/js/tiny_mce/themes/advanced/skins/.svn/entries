@@ -1,0 +1,44 @@
+10
+
+dir
+160
+svn://svn.ifpi.edu.br/desenvolvimento/trunk/projetopdi/layout/js/tiny_mce/themes/advanced/skins
+svn://svn.ifpi.edu.br
+
+
+
+2011-11-25T18:47:16.203706Z
+160
+manuel
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+954a3362-de54-4d16-8a39-485e302ae0be
+
+
+
+
+
+
+0
+
+default
+dir
+
+highcontrast
+dir
+
+o2k7
+dir
+

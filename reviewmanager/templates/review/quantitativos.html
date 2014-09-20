@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block titulo %}Publicações{% endblock %}
+{% block conteudo %}
+
+<table class="blockTable">
+<tr>
+<th>Revisão</th>
+</tr>
+<tr>
+   <td>{{ revisao.titulo }}</td>
+</tr>      
+
+</table>
+<br />
+
+<!-- Inicio -->
+<table class="blockTable">
+<tr>
+<th colspan="5">Quantitativos por Etapa</th>
+</tr>
+<tr>
+<td colspan="5">Localizadas <b>{{publicacoes|length }}</b> publicações nesta revisão.</td>
+</tr>
+{% for e in revisao.etapas.all %}
+<tr>
+<th colspan="5">{{ e.sigla }}</th>
+</tr>
+<tr>
+<th>Etapa</th><th>Fonte</th><th>Publicações</th><th>Excluídas</th><th>Aprovadas na Etapa</th>
+</tr>
+{% for q in quantitativos %}
+{% if e.sigla == q.etapa %}
+<tr>
+   <td>{{ q.etapa }}</td>
+   <td>{{ q.fonte }}</td>
+   <td>{{ q.total }}</td>
+   <td>{{ q.excluidas }}</td>
+   <td>{{ q.aprovadas }}</td>
+ </tr>      
+{% endif %}
+{% empty %}
+<tr>
+   <td colspan="5">Nenhuma publicação localizada para esta revisão.</td>
+</tr>
+
+{% endfor %}
+{% endfor %}
+</table>
+<!-- Fim -->
+
+{% endblock %}

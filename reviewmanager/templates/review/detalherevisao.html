@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block titulo %}Revisão{% endblock %}
+{% block conteudo %}
+
+
+<table class="blockTable">
+<tr>
+<th>Titulo</th>
+</tr>
+<tr>
+   <td>{{ revisao.titulo }}</td>
+</tr>      
+
+</table>
+<br />
+
+<table class="blockTable">
+<tr>
+<th>Opções disponíveis para esta Revisão</th>
+</tr>
+<tr>
+   <td><a href="{% url review:fontes revisao=revisao.id %}"> Fontes </a> </td>
+</tr>      
+<tr>
+   <td><a href="{% url review:etapas revisao=revisao.id %}"> Etapas </a> </td>
+</tr> 
+<tr>
+   <td><a href="{% url review:questoes revisao=revisao.id %}"> Questões </a> </td>
+</tr> 
+<tr>
+   <td><a href="{% url review:criterios revisao=revisao.id %}"> Critérios </a> </td>
+</tr> 
+<tr>
+   <td><a href="{% url review:publicacoes revisao=revisao.id %}"> Publicações, Referências e informações de cada questão por publicação</a> </td>
+</tr> 
+<tr>
+   <td><a href="{% url review:relatorios revisao=revisao.id %}"> Relatórios</a> </td>
+</tr> 
+
+</table>
+<br />
+
+
+{% endblock %}
